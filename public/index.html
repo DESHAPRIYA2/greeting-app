@@ -1,18 +1,8 @@
-const express = require("express");
-const app = express();
-
-app.use(express.static("public"));
-
-app.get("/welcome", (req, res) => {
-
-const username = req.query.username;
-
-res.send(`
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Welcome</title>
+<title>Greeting App</title>
 
 <style>
 
@@ -26,33 +16,51 @@ body{
     margin:0;
 }
 
-/* glowing card */
 .card{
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.65);
+    padding:40px;
     border-radius:15px;
-    padding:45px;
-    width:340px;
-    text-align:center;
-    color:white;
-    border:1px solid rgba(255,255,255,0.1);
     box-shadow:0 0 25px rgba(0,255,255,0.4),
                0 0 50px rgba(0,255,255,0.2);
+    text-align:center;
+    width:320px;
+    color:white;
+    border:1px solid rgba(255,255,255,0.1);
     transition:0.3s;
 }
 
 .card:hover{
     transform:scale(1.03);
-    box-shadow:0 0 40px rgba(0,255,255,0.7);
+    box-shadow:0 0 40px rgba(0,255,255,0.6);
 }
 
 h2{
-    font-size:28px;
-    letter-spacing:1px;
-    margin-bottom:25px;
+    margin-bottom:20px;
     color:#00ffff;
+    letter-spacing:1px;
 }
 
-/* neon button */
+input{
+    padding:12px;
+    width:100%;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.1);
+    color:white;
+    margin-top:10px;
+    font-size:14px;
+}
+
+input::placeholder{
+    color:#cccccc;
+}
+
+input:focus{
+    outline:none;
+    border-color:#00ffff;
+    box-shadow:0 0 10px rgba(0,255,255,0.6);
+}
+
 button{
     margin-top:20px;
     padding:12px;
@@ -74,24 +82,20 @@ button:hover{
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="card">
-<h2>Welcome ${username}</h2>
+<h2>Enter Name</h2>
 
-<button onclick="window.location.href='/'">
-Go Back
-</button>
+<form action="/welcome" method="GET">
+<input type="text" name="username" placeholder="Enter name" required>
+<button type="submit">Get Greeting</button>
+</form>
 
 </div>
 
 </body>
 </html>
-`);
-});
-
-app.listen(3001, () => {
-console.log("Server running on http://localhost:3001");
-});
